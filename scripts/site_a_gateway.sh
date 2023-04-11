@@ -23,3 +23,9 @@ cp /vagrant/pki/key/siteAKey.pem /etc/swanctl/private/
 
 # swanctl configurations
 cp /vagrant/config/swanctl-site-a.conf /etc/swanctl/swanctl.conf
+
+# load the certificates and private keys into the charon daemon
+swanctl --load-creds
+
+# load the connections defined in swanctl.conf
+swanctl --load-conns
