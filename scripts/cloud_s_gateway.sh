@@ -11,8 +11,8 @@ iptables-save > /etc/iptables/rules.v4
 ip6tables-save > /etc/iptables/rules.v6
 
 # install swanctl
-sudo apt-get update -y
-sudo apt-get install -y strongswan-swanctl
+apt-get update -y
+apt-get install -y strongswan-swanctl charon-systemd
 
 # Root CA certificate
 cp /vagrant/pki/cert/rootCACert.pem /etc/swanctl/x509ca/
