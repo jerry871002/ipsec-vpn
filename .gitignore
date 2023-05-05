@@ -2,3 +2,4 @@
 base/.vagrant
 base.box
 base/*.log
+pki/
