@@ -251,8 +251,8 @@ Vagrant.configure("2") do |config|
       virtualbox__intnet: "isp_link_s"
     # Interface towards cloud network
     gateway_s.vm.network "private_network",
-      ip: "172.48.48.49",
-      netmask: "255.255.255.240",
+      ip: "10.1.0.1",
+      netmask: "255.255.0.0",
       virtualbox__intnet: "cloud_network_s"
     gateway_s.vm.provider "virtualbox" do |vb|
       vb.name = "gateway-s"
@@ -276,8 +276,8 @@ Vagrant.configure("2") do |config|
     ## NETWORK INTERFACES
     # Interface towards cloud network
     server_s1.vm.network "private_network",
-      ip: "172.48.48.51",
-      netmask: "255.255.255.240",
+      ip: "10.1.0.2",
+      netmask: "255.255.0.0",
       virtualbox__intnet: "cloud_network_s"
     server_s1.vm.provider "virtualbox" do |vb|
       vb.name = "server-s1"
@@ -295,33 +295,4 @@ Vagrant.configure("2") do |config|
     # Install dependencies and define the NAT
     server_s1.vm.provision :shell, run: "always", path: "scripts/cloud_server.sh"
   end
-
-  # Cloud server S2
-  config.vm.define "server-s2" do |server_s2|
-    server_s2.vm.box = "base"
-    server_s2.vm.hostname = "server-s2"
-    server_s2.vbguest.auto_update = false
-    ## NETWORK INTERFACES
-    # Interface towards cloud network
-    server_s2.vm.network "private_network",
-      ip: "172.48.48.52",
-      netmask: "255.255.255.240",
-      virtualbox__intnet: "cloud_network_s"
-    server_s2.vm.provider "virtualbox" do |vb|
-      vb.name = "server-s2"
-      # Change the default Vagrant ssh address
-      vb.customize ['modifyvm', :id, '--natnet1', '192.168.122.0/24']
-      # Performance
-      vb.cpus = 1
-      vb.memory = 512
-      vb.linked_clone = true
-      vb.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
-    end
-    # Server app
-    server_s2.vm.provision :file, source: './apps/server_app',
-      destination: "server_app"
-    # Install dependencies and define the NAT
-    server_s2.vm.provision :shell, run: "always", path: "scripts/cloud_server.sh"
-  end
-
 end
