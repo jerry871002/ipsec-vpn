@@ -8,7 +8,7 @@ apt-get install -y strongswan-swanctl charon-systemd
 ##### Setup iptables rules #####
 
 # NAT traffic going to the internet
-route add default gw 172.16.16.1
+route add default gw 172.18.18.1
 iptables -t nat -A POSTROUTING -o enp0s8 -j MASQUERADE
 
 # Redirect traffic that was going to the local server to the cloud server
